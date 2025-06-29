@@ -1,0 +1,389 @@
+:root{
+    --main-color:#f0ecf0;
+    --black-color:#000000;
+    --secondary-color: #ffffff;
+    --blue-color: rgb(0, 0, 204);
+    --grey-color:rgb(107 114 128);
+    --bg-grey-color: rgb(56 127 245);
+    --grey-color-hover: rgba(56, 129, 245, 0.1);
+    
+    --red-hover-color:rgba(239, 68, 68, 0.1);
+    --red-color:rgb(239 68 68);
+
+    --green-color:rgb(34 197 94);
+    --green-color-hover:rgba(34, 197, 94, 0.1);
+}
+
+body{
+    background-color: #000000;
+}
+
+
+.modal-content .modal-header button{
+    color: #ffffff;
+    background: transparent;
+    font-size: 20px;
+    margin-left: auto;
+    padding: 0px 3px;
+    border: 1px solid var(--bg-grey-color);
+    border-radius: 4px;
+}
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--bg-grey-color);
+    backdrop-filter: blur(27px);
+    background-clip: padding-box;
+    border: 2px solid var(--bg-grey-color);
+    border-radius: 10px;
+    outline: 0;
+    background-color: #0000001f;
+}
+.modal-content .modal-footer,
+.modal-content .modal-header{
+    border-color: inherit;
+}
+
+
+
+.loading-test{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 70px 60px #0c0000 inset;
+}
+.loading-test.active{
+    display: none;
+}
+.loading-test img{
+    padding: 10px;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    backdrop-filter: drop-shadow(0 0 10px #000000);
+}
+
+/* Start Make Component */
+    .new-post{
+        cursor: pointer;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        z-index: 99;
+        width: 55px;
+        height: 55px;
+        box-shadow: 0 4px 8px #0000008f;
+        background-color: var(--bg-grey-color);
+        color: var(--secondary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+}
+    .new-post i{
+        font-size: 1.8rem;
+    }
+
+@media (max-width: 992px) {
+    .container{
+        max-width: 100% !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .col-9{
+        width: 100%;
+        padding: 0;
+    }
+}
+#success-alert{
+    position: fixed;
+    right: 3%;
+    width: 90%;
+    height: 80px;
+    top: 30%;
+    color: var(--secondary-color);
+    background: #051b11;
+    max-width: 600px;
+    z-index: 999;
+    border: 3px solid #017640;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+/* End Make Component */
+.navbar{
+    background: #000000ba;
+    backdrop-filter: blur(20px);
+}
+.navbar a img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+@media (max-width: 576px){
+    .navbar a img{
+        width:50px;
+        height:50px;
+    }
+}
+.navbar .nav-link{
+    color: var(--grey-color) !important;
+}
+.navbar a.active,
+.navbar a{
+    color: var(--secondary-color) !important;
+    font-weight: bold;
+}
+.navbar .status .hidden{
+    display: none;
+}
+
+.navbar-toggler{
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+}
+.navbar-toggler:focus{
+    outline: none;
+    box-shadow: 0 0 0px 3px var(--main-color);
+    transform: rotate(-270deg);
+    -webkit-transform: rotate(-270deg);
+    -moz-transform: rotate(-270deg);
+    -ms-transform: rotate(-270deg);
+    -o-transform: rotate(-270deg);
+}
+.navbar .navbar-toggler i {
+    font-size: 30px;
+    color: var(--main-color);
+}
+
+/* End Navbar */
+.post-box{
+    gap: 8px;
+    background-color: #000;
+    box-shadow: 0 0 1px var(--grey-color);
+}
+
+.post-box .user-image img{
+    width: 70px;
+    height: 70px;
+
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: 5px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    position: relative;
+    border: 2px solid var(--main-color);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+
+@media (max-width: 576px){
+    .post-box .user-image img{
+        width: 45px;
+        height: 45px;
+        margin-left: 0px;
+    }
+}
+
+.post:first-child{
+    margin-top: 5rem !important;
+}
+.post:last-child{
+    margin-bottom: 5rem !important;
+}
+/* card Info Start */
+.post .card{
+    background-color: transparent;
+    color: var(--secondary-color);
+    border: 0;
+    box-shadow: none;
+}
+.post .user-info{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.post .user-info .info-text{
+    max-width: 90px; /* العرض الأقصى للنص */
+    white-space: nowrap; /* منع النص من الانتقال إلى سطر جديد */
+    overflow: hidden; /* إخفاء النص الزائد */
+    text-overflow: ellipsis;  /* add 3 dots */
+}
+.post .user-info .user-name{
+    max-width: 200px;
+}
+@media (max-width: 576px){
+    .post .user-info .user-name{
+        max-width: 85px; /* العرض الأقصى للنص */
+    }
+}
+.post .user-info i{
+    color: var(--bg-grey-color);
+}
+.post .user-info .user-sittings{
+    margin-left: auto;
+}
+
+.post .user-info .user-sittings i{
+    color: var(--grey-color);
+    cursor: pointer;
+    font-size: 1.3rem;
+}
+@media (max-width: 500px){
+    .post .user-info .user-sittings i{
+        font-size: 1rem;
+    }
+}
+.post .user-info .username{
+    font-size: 13px;
+    max-width: 100px; /* العرض الأقصى للنص */
+    color: var(--grey-color);
+}
+@media (max-width: 500px){
+    .post .user-info .username{
+        max-width: 40px; /* العرض الأقصى للنص */
+    }
+}
+.post .user-info .post-history{
+    font-size: 12px;
+    color: var(--grey-color);
+}
+/* card Info End */
+.post .card-body {
+    padding: 0rem 1rem;
+    margin-left: 10px;
+    max-width: 90%;
+
+}
+ .post .card-body .title{
+    display: block;
+    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1.3;
+}
+    
+ .post .card-body p{
+    font-size: .9rem;
+ }
+
+@media (min-width: 576px){
+    .post .card-body .title{
+        font-size: 2rem;
+    }
+    .post .card-body p{
+        font-size: 1.3rem;
+    }
+    
+}
+.post .card-header {
+    background-color: transparent !important;
+    border: 0 !important;
+}
+
+.post .Reactions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    max-width: 500px;
+}
+@media (max-width:500px){
+    .post .Reactions{
+        padding: 1rem 0.5rem;
+    }
+}
+.post .Reactions  > div{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+    color: var(--grey-color);
+    padding: 5px 8px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+
+.post .Reactions  > div:nth-of-type(1) .active-child,
+.post .Reactions  > div:nth-of-type(4) .active-child{
+    color: var(--bg-grey-color);
+}
+.post .Reactions  > div:nth-of-type(2) .active-child{
+    color: var(--green-color);
+}
+.post .Reactions  > div:nth-of-type(3) .active-child{
+    color: var(--red-color);
+}
+
+.post .Reactions  > div:nth-of-type(1):hover,
+.post .Reactions  > div:nth-of-type(4):hover{
+    background-color: var(--grey-color-hover);
+    color: var(--bg-grey-color);
+}
+
+.post .Reactions  > div:nth-of-type(2):hover{
+    background-color: var(--green-color-hover);
+    color: var(--green-color) ;
+}
+.post .Reactions  > div:nth-of-type(3):hover{
+    background-color: var(--red-hover-color);
+    color: var(--red-color);
+}
+.post .card-header img{
+    cursor: pointer;
+    object-fit: cover;
+    min-height: 300px;
+    max-height: 330px;
+    max-width: 100%;
+    width: fit-content;
+    min-width: 260px;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}
+@media (max-width: 500px){
+    .post .card-header img{
+        min-width: auto;
+        width: 100%;
+}
+}

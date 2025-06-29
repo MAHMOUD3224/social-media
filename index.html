@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Social Media Application for connecting with friends and sharing updates.">
+    <meta name="keywords" content="social media, friends, updates, sharing, connect">
+    <meta name="author" content="Mahmoud Rashad">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="Home | Social Media App">
+    <meta property="og:description" content="Social media application for connecting with friends and sharing updates.">
+    <meta property="og:type" content="website">
+
+    <title>Home | Social Media App</title>
+    <!-- Import Bootstrap -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+    <!-- bootstrap Icon -->
+      <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+      <!-- axios Api Library -->
+      <script src="./node_modules/axios/dist/axios.min.js"></script>
+      <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+<div class="loading-test"><img src="./images/world_16569394.png" alt="logo"></div>
+<!-- Start Modal -->
+ <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">LogIn</h1>
+        <button type="button" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="color: #fff;"></i></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="username-input" class="col-form-label">Username:</label>
+            <input type="text" class="form-control" required id="username-input">
+          </div>
+          <div class="mb-3">
+            <label for="password-input" class="col-form-label">Password:</label>
+            <input type="password" class="form-control" required id="password-input">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="loginBtnClicked()">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Fill out the form to join our community.</h1>
+        <button type="button" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="color: #fff;"></i></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="name-input" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" required id="name-input" placeholder="Write your name">
+          </div>
+          <div class="mb-3">
+            <label for="username-register-input" class="col-form-label">Username:</label>
+            <input type="text" class="form-control" required placeholder="@UniqueUsername" id="username-register-input">
+          </div>
+          <div class="mb-3">
+            <label for="password-register-input" class="col-form-label">Password:</label>
+            <input type="password" class="form-control" required placeholder="WritePass****" id="password-register-input">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="registerBtnClicked()">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- End Modal -->
+  <!-- Start Success Alert -->
+   <div id="success-alert hidden">you have logged in successfully</div>
+  <!-- End Success Alert -->
+
+ <!-- Start Navigation bar -->
+<div class="container position-sticky top-0 z-3">
+  <div class="d-flex justify-content-center">
+      <div class="col-9">
+        <nav class="navbar navbar-expand-lg  pt-3 bord-rad-4 rounded-3">
+              <div class="container-fluid ">
+                <a class="navbar-brand" href="#"><img src="./images/world_16569394.png" loading="lazy" alt="logo"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="bi bi-list-ul"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                  </ul>
+                  <div class="status d-flex w-100 justify-content-end gap-3 align-items-center">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#login-modal">LogIn</button>
+                    <button button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                    <div class="after-login gap-2 hidden">
+                      <button button type="button" class="btn btn-outline-danger">Logout</button>
+                      <img src="./images/world_16569394.png" alt="user avatar" style="margin-right: 10px; width: 40px; height: 40px; border-radius: 50%;">
+                  </div>
+                  </div>
+                </div>
+              </div>
+        </nav>
+    </div>
+  </div>
+</div>
+  <!-- End Navigation bar -->
+
+
+<!-- Start Main Content  -->
+<div class="container ">
+  <!-- POSTS -->
+  <div class="post d-flex justify-content-center">
+      <div class="col-9" id="posts-container">
+        <div class="post-box d-flex p-2 ">
+        <div class="user-image">
+          <img src="./images/post1.webp" alt="avatar">
+        </div>
+        <div class="posts">
+      <div class="card">
+          <div class="user-info ps-3">
+            <span class="user-name info-text">Mahmoud Rashad asassasa asasa</span>
+            <i class="bi bi-patch-check-fill"></i>
+            <span class="username info-text">@mahrashad</span>
+            <span class="post-history">. 1m</span>
+            <span class="user-sittings"><i class="bi bi-three-dots-vertical"></i></span>
+          </div>
+          <div class="card-body">
+            <span class="title">Welcome In The Tarmeez community</span>
+        <p class="card-text"> With supporting text below as a natural lead-in to additional content.</p>
+      </div>
+      <div class="card-header"> 
+        <img src="./images/transparent-background.png" alt="post1">
+        <div class="Reactions ">
+        <div class="chat-box">
+          <i class="bi bi-chat "></i>
+          <span class="chat-count count ">0</span>
+        </div>
+        <div class="repost-box">
+          <i class="bi bi-pencil-square"></i>
+          <span class="repost-count count ">0</span>
+        </div>
+        <div class="hearts-box">
+          <i class="bi bi-heart"></i>
+          <span class="hearts-count count">0</span>
+        </div>
+        <div class="share"><i class="bi bi-box-arrow-up-right "></i></div>
+      </div>
+      </div>
+
+
+    </div>  
+        </div>
+        </div>
+        
+      </div>
+
+  </div>
+
+
+  <!-- POSTS -->
+
+</div> 
+<!-- End Main Content  -->
+  <div class="new-post"><i class="bi bi-feather"></i></div>
+
+<script src="./main.js"></script>
+</body>
+</html>
