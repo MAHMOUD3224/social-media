@@ -4,26 +4,9 @@ let menuBtn = document.querySelector('.navbar-toggler');
 let navBar = document.querySelector('.navbar-collapse');
 let nav_item = document.querySelectorAll('.navbar-collapse .nav-item');
 let posts_container = document.querySelector(".post #posts-container");
-
-posts_container.addEventListener('click', (event) => {
-    let box = event.target.closest('.hearts-box');
-    if (box) {
-        let count = box.children[1];
-        box.classList.toggle('active');
-        if (box.classList.contains('active')) {
-            count.textContent = parseInt(count.textContent) + 1;
-            box.children[0].classList.add("active-child");
-            box.children[1].classList.add("active-child");
-            box.children[0].classList = 'bi bi-heart-fill active-child';
-        } else {
-            count.textContent = parseInt(count.textContent) - 1;
-            box.children[0].classList.remove("active-child");
-            box.children[1].classList.remove("active-child");
-            box.children[0].classList = 'bi bi-heart';
-        }
-    }
-});
-
+let newPost = document.querySelector('.new-post');
+    
+        setupUI();
     // Toggle the navbar when the menu button is focused
     menuBtn.addEventListener("focus",toggleNavbar)
     nav_item.forEach(item => {
@@ -44,7 +27,7 @@ posts_container.addEventListener('click', (event) => {
         let posts = response.data.data;
         let fragment = '' ;
         for(post of posts){
-            let content = `
+                let content = `
                 <div class="post-box d-flex p-2 ">
             <div class="user-image">
             <img src="${post.author.profile_image || Object.keys(post.author.profile_image).length === 0 ?"./images/world_16569394.png" : post.author.profile_image}" alt="avatar">
@@ -63,7 +46,7 @@ posts_container.addEventListener('click', (event) => {
             <p class="card-text"> ${post.body || ""}</p>
         </div>
         <div class="card-header"> 
-        <img src="${!post.image || Object.keys(post.image).length === 0 ? './images/transparent-background.png' : post.image}" alt="post1">
+            ${!post.image || Object.keys(post.image).length === 0 ? '' : `<img src="${post.image}" alt="post Image"></img>`}
             <div class="Reactions ">
             <div class="chat-box">
             <i class="bi bi-chat "></i>
@@ -89,7 +72,6 @@ posts_container.addEventListener('click', (event) => {
             `
             fragment += content;
         }
-        console.log(response.data.data)
         posts_container.innerHTML = fragment;
 
     })
@@ -100,6 +82,13 @@ posts_container.addEventListener('click', (event) => {
         }, 2000);
 
     });
+
+    // logout request Function
+    function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setupUI()
+    }
     // login request Function
     function loginBtnClicked(){
         let username = document.getElementById("username-input");
@@ -110,22 +99,19 @@ posts_container.addEventListener('click', (event) => {
             "username": username.value,
             "password": password.value
         }
-
-
         const loginPost = `${url}login` ;
         axios.post(loginPost,params)  
         .then((response) => {
             localStorage.setItem("token",response.data.token);
             localStorage.setItem("user",JSON.stringify(response.data.user));
+            setupUI()
+            let login_modal = document.getElementById("login-modal");
+            const modalInstance = bootstrap.Modal.getInstance(login_modal);
+            modalInstance.hide();
+            showSuccessAlert();
         })
-        username.value = '' ;
-        password.value = '' ;
-        setupUI();
-        let login_modal = document.getElementById("login-modal");
-        const modalInstance = bootstrap.Modal.getInstance(login_modal);
-        modalInstance.hide();
     }
-    
+    // 
     function registerBtnClicked(){
         let usernameRegister = document.getElementById("username-register-input");
         let nameRegister = document.getElementById("name-input");
@@ -139,11 +125,18 @@ posts_container.addEventListener('click', (event) => {
         let registerUrl = `${url}register`
         axios.post(registerUrl,params)
         .then((response) => {
-            console.log(response)
+            localStorage.setItem("token",response.data.token);
+            localStorage.setItem("user",JSON.stringify(response.data.user));
+            setupUI()
+            let register_modal = document.getElementById("registerModal");
+            const modalInstance = bootstrap.Modal.getInstance(register_modal);
+            modalInstance.hide();
         })
     }
     function showSuccessAlert(){
-    const alertPlaceholder = document.getElementById('success-alert')
+    const alertPlaceholder = document.getElementById('success-alert');
+    alertPlaceholder.classList.add("show")
+
     const appendAlert = (message, type) => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = [
@@ -155,11 +148,11 @@ posts_container.addEventListener('click', (event) => {
 
     alertPlaceholder.append(wrapper)
     }
-
-    const alertTrigger = document.getElementById('liveAlertBtn')
-    if (alertTrigger) {
- 
-    }
+    appendAlert('Nice, You Triggered This alert message!','success');
+    setTimeout(function(){
+        alertPlaceholder.innerHTML = '';
+        alertPlaceholder.classList.remove("show");
+    },2000)
     }
 
     function setupUI(){
@@ -171,9 +164,31 @@ posts_container.addEventListener('click', (event) => {
         if(token == null) // it means that User Is just a Guest 
         {
             afterLogin.classList.add("hidden");
+            buttonsRegister.forEach(buttons => buttons.classList.remove("hidden") );
+            newPost.classList.add("hidden");
         }else{
-            buttonsRegister.forEach(buttons => buttons.remove() );
+            buttonsRegister.forEach(buttons => buttons.classList.add("hidden") );
             afterLogin.classList.remove("hidden");
-
+            newPost.classList.remove("hidden");
         }
     }
+
+    
+    posts_container.addEventListener('click', (event) => {
+    let box = event.target.closest('.hearts-box');
+    if (box) {
+        let count = box.children[1];
+        box.classList.toggle('active');
+        if (box.classList.contains('active')) {
+            count.textContent = parseInt(count.textContent) + 1;
+            box.children[0].classList.add("active-child");
+            box.children[1].classList.add("active-child");
+            box.children[0].classList = 'bi bi-heart-fill active-child';
+        } else {
+            count.textContent = parseInt(count.textContent) - 1;
+            box.children[0].classList.remove("active-child");
+            box.children[1].classList.remove("active-child");
+            box.children[0].classList = 'bi bi-heart';
+        }
+    }
+});

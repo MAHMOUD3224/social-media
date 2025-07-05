@@ -86,7 +86,7 @@
 </div>
  <!-- End Modal -->
   <!-- Start Success Alert -->
-   <div id="success-alert hidden">you have logged in successfully</div>
+   <div id="success-alert" class="fade"></div>
   <!-- End Success Alert -->
 
  <!-- Start Navigation bar -->
@@ -108,8 +108,8 @@
                   <div class="status d-flex w-100 justify-content-end gap-3 align-items-center">
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#login-modal">LogIn</button>
                     <button button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
-                    <div class="after-login gap-2 hidden">
-                      <button button type="button" class="btn btn-outline-danger">Logout</button>
+                    <div class="after-login">
+                      <button onclick="logout()" button type="button" id="logged-in" class="btn btn-outline-danger me-2">Logout</button>
                       <img src="./images/world_16569394.png" alt="user avatar" style="margin-right: 10px; width: 40px; height: 40px; border-radius: 50%;">
                   </div>
                   </div>

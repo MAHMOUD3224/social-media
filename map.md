@@ -30,6 +30,7 @@
 -----
 
 ## The new knowledge I have gained
+
 > closest("SomeElement")
 ----
 

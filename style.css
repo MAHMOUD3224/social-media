@@ -110,25 +110,37 @@ body{
 }
 #success-alert{
     position: fixed;
-    right: 3%;
-    width: 90%;
-    height: 80px;
-    top: 30%;
-    color: var(--secondary-color);
-    background: #051b11;
-    max-width: 600px;
     z-index: 999;
-    border: 3px solid #017640;
-    border-radius: 8px;
+    right: 3%;
+    top: 20%;
+    width: 90%;
+    max-width: 600px;
+}
+#success-alert:not(.show){
+    pointer-events: none;
+}
+/* #success-alert{
+    position: fixed;
+    z-index: 999;
+    right: 3%;
+    top: 30%;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 80px;
+    border-radius: 8px;
+    background: #051b11;
+    font-style: italic;
+    border: 3px solid #017640;
     font-size: 1.3rem;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
+    color: var(--secondary-color);
 }
+@media (max-width:767px){
+    #success-alert{
+        font-size: 1rem;
+    }
+} */
 
 /* End Make Component */
 .navbar{
@@ -160,8 +172,8 @@ body{
     color: var(--secondary-color) !important;
     font-weight: bold;
 }
-.navbar .status .hidden{
-    display: none;
+.hidden{
+    display: none !important;
 }
 
 .navbar-toggler{
@@ -188,26 +200,20 @@ body{
 /* End Navbar */
 .post-box{
     gap: 8px;
-    background-color: #000;
-    box-shadow: 0 0 1px var(--grey-color);
+    box-shadow: 0 0 1px var(--blue-color)
 }
 
-.post-box .user-image img{
-    width: 70px;
-    height: 70px;
 
+
+.post-box .user-image img{
     cursor: pointer;
     margin-left: 5px;
     margin-top: 5px;
+    border-radius: 50%;
     object-fit: cover;
     object-position: center;
-    border-radius: 50%;
-    position: relative;
-    border: 2px solid var(--main-color);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
+    width: 70px;
+    height: 70px;
 }
 
 
