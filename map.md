@@ -26,16 +26,41 @@
 
 
 ## in Progress
-
+ 
 -----
+
+## in future inshallah
+- Create tags if the user selects this option.
+- Create a view counter for each post to display the number of views.
+- make sound by js when User hover buttons
+- Allow the user to post more than one photo or video. 
+-----
+
 
 ## The new knowledge I have gained
 
-> closest("SomeElement")
+> ### closest("SomeElement")
+>
+> ###  new DataTransfer() 
+>
+> ### let formData = new FormData();
+>        formData.append("username", usernameRegister.value);
+>        formData.append("password", passwordRegister.value);
+>        formData.append("name", nameRegister.value);
+>
+> ### onerror
+>
+> ### any steps you didn't do write comment start with 'todo:'
+>
+> ### when you drop file in input-file `type ="file"` there is events for this input `dragover` & `dragleave` & `drop` 
 ----
 
 ## Questions that I am curious to know the answers to
 
 1 - what is the difference between `Authorization` and `Authentication`?
+
 2 - 
+
+3 -
+
 ----

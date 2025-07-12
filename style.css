@@ -17,7 +17,10 @@
 body{
     background-color: #000000;
 }
-
+::selection{
+    background-color: var(--bg-grey-color);
+    color: #000000;
+}
 
 .modal-content .modal-header button{
     color: #ffffff;
@@ -28,6 +31,36 @@ body{
     border: 1px solid var(--bg-grey-color);
     border-radius: 4px;
 }
+.labelFile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 130px;
+    border: 2px dashed #ffffff;
+    align-items: center;
+    text-align: center;
+    color: rgb(255 255 255);
+    padding: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: 300ms ease-out;
+    -webkit-transition: 300ms ease-out;
+    -moz-transition: 300ms ease-out;
+    -ms-transition: 300ms ease-out;
+    -o-transition: 300ms ease-out;
+}
+.labelFile.onDrop{
+    border-width: 4px;
+    font-size: 1.1rem;
+    border-color: var(--bg-grey-color);
+    transform: scale(1.03);
+    color: var(--bg-grey-color);
+}
+.input-file {
+  max-width: 190px;
+  display: none;
+}
+
 .modal-content {
     position: relative;
     display: flex;
@@ -45,6 +78,12 @@ body{
 .modal-content .modal-header{
     border-color: inherit;
 }
+#profileImage{
+    --webkit-appearance:none;
+    appearance: none;
+    display: none;
+}
+
 
 
 
@@ -73,6 +112,25 @@ body{
 }
 
 /* Start Make Component */
+    /* tags btn Start */
+    .tags{
+        display:inline-flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    .tags button{
+    font-size: .8rem;
+    background-color: transparent !important;
+    border-color: #111 !important;
+    }
+    .tags button .hash{
+        color: var(--blue-color);
+    }
+    .tags button:focus,
+    .tags button:hover{
+        background-color: transparent ;
+    }
+    /* tags btn End */
     .new-post{
         cursor: pointer;
         position: fixed;
@@ -100,8 +158,8 @@ body{
 @media (max-width: 992px) {
     .container{
         max-width: 100% !important;
-        padding-left: 0px !important;
-        padding-right: 0px !important;
+        padding-left:4px !important;
+        padding-right:4px !important;
     }
     .col-9{
         width: 100%;
@@ -110,9 +168,9 @@ body{
 }
 #success-alert{
     position: fixed;
-    z-index: 999;
+    z-index: 1060;
     right: 3%;
-    top: 20%;
+    top: 30%;
     width: 90%;
     max-width: 600px;
 }
@@ -136,11 +194,12 @@ body{
     font-size: 1.3rem;
     color: var(--secondary-color);
 }
+ */
 @media (max-width:767px){
     #success-alert{
         font-size: 1rem;
     }
-} */
+}
 
 /* End Make Component */
 .navbar{
@@ -200,7 +259,7 @@ body{
 /* End Navbar */
 .post-box{
     gap: 8px;
-    box-shadow: 0 0 1px var(--blue-color)
+    box-shadow: 0px 0 2px #222 ;
 }
 
 
@@ -234,7 +293,7 @@ body{
 /* card Info Start */
 .post .card{
     background-color: transparent;
-    color: var(--secondary-color);
+    color: #dfdfdf;
     border: 0;
     box-shadow: none;
 }
@@ -291,10 +350,13 @@ body{
 }
 /* card Info End */
 .post .card-body {
-    padding: 0rem 1rem;
-    margin-left: 10px;
+    padding: 0 1rem !important;
     max-width: 90%;
-
+}
+@media(max-width:500px){
+    .post .card-body {
+        max-width: 240px;
+    }
 }
  .post .card-body .title{
     display: block;
@@ -389,7 +451,7 @@ body{
 }
 @media (max-width: 500px){
     .post .card-header img{
-        min-width: auto;
-        width: 100%;
+        min-width: 80%;
+        width: auto;
 }
 }

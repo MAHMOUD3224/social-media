@@ -27,6 +27,8 @@
 <body>
 <div class="loading-test"><img src="./images/world_16569394.png" alt="logo"></div>
 <!-- Start Modal -->
+<!-- login modal start -->
+
  <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -38,11 +40,11 @@
         <form>
           <div class="mb-3">
             <label for="username-input" class="col-form-label">Username:</label>
-            <input type="text" class="form-control" required id="username-input">
+            <input type="text" class="form-control" required id="username-input" value="Palestine">
           </div>
           <div class="mb-3">
             <label for="password-input" class="col-form-label">Password:</label>
-            <input type="password" class="form-control" required id="password-input">
+            <input type="password" class="form-control" required id="password-input" value="palestine">
           </div>
         </form>
       </div>
@@ -53,7 +55,9 @@
     </div>
   </div>
 </div>
+<!-- login modal End -->
 
+<!-- register modal start -->
  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -65,15 +69,22 @@
         <form>
           <div class="mb-3">
             <label for="name-input" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" required id="name-input" placeholder="Write your name">
+            <input type="text" class="form-control"  id="name-input" placeholder="Write your name">
           </div>
           <div class="mb-3">
             <label for="username-register-input" class="col-form-label">Username:</label>
-            <input type="text" class="form-control" required placeholder="@UniqueUsername" id="username-register-input">
+            <input type="text" class="form-control"  placeholder="@UniqueUsername" id="username-register-input">
           </div>
           <div class="mb-3">
             <label for="password-register-input" class="col-form-label">Password:</label>
-            <input type="password" class="form-control" required placeholder="WritePass****" id="password-register-input">
+            <input type="password" class="form-control"  placeholder="WritePass****" id="password-register-input">
+          </div>
+          <div>
+          <label for="file" class="labelFile">
+            <span style="font-size: 50px;"><i class="bi bi-card-image"></i></span>
+            <p>drag and drop your Profile image here or click to select a file!</p>
+          </label>
+          <input class="input-file" name="text" id="file" accept="image/*,video/*" type="file"/>
           </div>
         </form>
       </div>
@@ -84,10 +95,47 @@
     </div>
   </div>
 </div>
+<!-- register modal End -->
+<!-- create new post modal Start -->
+
+<div class="modal fade" id="create-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create A New Post</h1>
+        <button type="button" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="color: #fff;"></i></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="title-input" class="col-form-label">title:</label>
+            <input type="text" class="form-control" id="title-input" placeholder="Write The Title">
+          </div>
+          <div class="mb-3">
+            <label for="body-input" class="col-form-label">title:</label>
+            <input type="text" class="form-control" id="body-input"  placeholder="Write The Body">
+          </div>
+          <div>
+          <!-- <label for="file" class="labelFile">
+            <span style="font-size: 50px;"><i class="bi bi-card-image"></i></span>
+            <p>drag and drop your Profile image here or click to select a file!</p>
+          </label>
+          <input class="input-file" name="text" accept="image/*,video/*" type="file"/> -->
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ignore</button>
+        <button type="button" class="btn btn-primary" onclick="createNewPostClicked()">Post</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- create new post modal End -->
+
+
  <!-- End Modal -->
-  <!-- Start Success Alert -->
-   <div id="success-alert" class="fade"></div>
-  <!-- End Success Alert -->
+
 
  <!-- Start Navigation bar -->
 <div class="container position-sticky top-0 z-3">
@@ -95,7 +143,7 @@
       <div class="col-9">
         <nav class="navbar navbar-expand-lg  pt-3 bord-rad-4 rounded-3">
               <div class="container-fluid ">
-                <a class="navbar-brand" href="#"><img src="./images/world_16569394.png" loading="lazy" alt="logo"></a>
+                <a class="navbar-brand focus-ring" href="#"><img src="./images/world_16569394.png" loading="lazy" alt="logo"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <i class="bi bi-list-ul"></i>
                 </button>
@@ -110,7 +158,7 @@
                     <button button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
                     <div class="after-login">
                       <button onclick="logout()" button type="button" id="logged-in" class="btn btn-outline-danger me-2">Logout</button>
-                      <img src="./images/world_16569394.png" alt="user avatar" style="margin-right: 10px; width: 40px; height: 40px; border-radius: 50%;">
+                      <img src="./images/822.jpg" alt="user avatar" class="focus-ring" loading="lazy" aria-live="polite" tabindex="0" style="margin-right: 10px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
                   </div>
                   </div>
                 </div>
@@ -129,9 +177,10 @@
       <div class="col-9" id="posts-container">
         <div class="post-box d-flex p-2 ">
         <div class="user-image">
-          <img src="./images/post1.webp" alt="avatar">
+          <img src="./images/post1.webp" alt="User avatar" aria-live="polite" tabindex="0">
         </div>
         <div class="posts">
+          
       <div class="card">
           <div class="user-info ps-3">
             <span class="user-name info-text">Mahmoud Rashad asassasa asasa</span>
@@ -142,7 +191,12 @@
           </div>
           <div class="card-body">
             <span class="title">Welcome In The Tarmeez community</span>
-        <p class="card-text"> With supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text"> With supporting text below as a natural lead-in to additional content.</p>
+            <div class="tags">
+              <button type="button" class="btn btn-dark"><span class="hash">#</span> Tech</button>
+              <button type="button" class="btn btn-dark"><span class="hash">#</span> Tech</button>
+              <button type="button" class="btn btn-dark"><span class="hash">#</span> Tech</button>
+            </div>
       </div>
       <div class="card-header"> 
         <img src="./images/transparent-background.png" alt="post1">
@@ -177,7 +231,7 @@
 
 </div> 
 <!-- End Main Content  -->
-  <div class="new-post"><i class="bi bi-feather"></i></div>
+
 
 <script src="./main.js"></script>
 </body>
