@@ -16,16 +16,20 @@
     <!-- Import Bootstrap -->
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+    <!-- App Icon -->
+    <link rel="icon" href="./images/world_16569394.png" type="image/x-icon">
+    
     <!-- bootstrap Icon -->
       <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+      <!-- AOS Animation Library -->
+      <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
       <!-- axios Api Library -->
       <script src="./node_modules/axios/dist/axios.min.js"></script>
       <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
-<div class="loading-test"><img src="./images/world_16569394.png" alt="logo"></div>
+<body class="none-scroll">
+<div class="loading-test"> <div class="loader"></div></div>
 <!-- Start Modal -->
 <!-- login modal start -->
 
@@ -58,7 +62,7 @@
 <!-- login modal End -->
 
 <!-- register modal start -->
- <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -69,22 +73,22 @@
         <form>
           <div class="mb-3">
             <label for="name-input" class="col-form-label">Name:</label>
-            <input type="text" class="form-control"  id="name-input" placeholder="Write your name">
+            <input type="text" class="form-control" id="name-input" placeholder="Write your name">
           </div>
           <div class="mb-3">
             <label for="username-register-input" class="col-form-label">Username:</label>
-            <input type="text" class="form-control"  placeholder="@UniqueUsername" id="username-register-input">
+            <input type="text" class="form-control" placeholder="@UniqueUsername" id="username-register-input">
           </div>
           <div class="mb-3">
             <label for="password-register-input" class="col-form-label">Password:</label>
-            <input type="password" class="form-control"  placeholder="WritePass****" id="password-register-input">
+            <input type="password" class="form-control" placeholder="WritePass****" id="password-register-input">
           </div>
           <div>
-          <label for="file" class="labelFile">
-            <span style="font-size: 50px;"><i class="bi bi-card-image"></i></span>
-            <p>drag and drop your Profile image here or click to select a file!</p>
-          </label>
-          <input class="input-file" name="text" id="file" accept="image/*,video/*" type="file"/>
+            <label for="file-register" class="labelFile">
+              <span style="font-size: 50px;"><i class="bi bi-card-image"></i></span>
+              <p>drag and drop your Profile image here or click to select a file!</p>
+            </label>
+            <input class="input-file" name="text" id="file-register" accept="image/png,image/jpeg,image/jpg" type="file"/>
           </div>
         </form>
       </div>
@@ -96,8 +100,8 @@
   </div>
 </div>
 <!-- register modal End -->
-<!-- create new post modal Start -->
 
+<!-- create new post modal Start -->
 <div class="modal fade" id="create-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -108,19 +112,19 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="title-input" class="col-form-label">title:</label>
-            <input type="text" class="form-control" id="title-input" placeholder="Write The Title">
+            <label for="title-input" class="col-form-label">Title:</label>
+            <input type="text" class="form-control focus-ring focus-ring-light" id="title-input" placeholder="Write The Title">
           </div>
           <div class="mb-3">
-            <label for="body-input" class="col-form-label">title:</label>
-            <input type="text" class="form-control" id="body-input"  placeholder="Write The Body">
+            <label for="body-input" class="col-form-label">Body:</label>
+            <textarea id="body-input" class="focus-ring focus-ring-light" placeholder="Write The Body"></textarea>
           </div>
           <div>
-          <!-- <label for="file" class="labelFile">
-            <span style="font-size: 50px;"><i class="bi bi-card-image"></i></span>
-            <p>drag and drop your Profile image here or click to select a file!</p>
-          </label>
-          <input class="input-file" name="text" accept="image/*,video/*" type="file"/> -->
+            <label for="file-post" class="labelFile" tabindex="0" aria-live="polite">
+              <span style="font-size: 50px;"><i class="bi bi-card-image"></i></span>
+              <p>drag and drop your Profile image here or click to select a file!</p>
+            </label>
+            <input class="input-file" name="text" id="file-post" accept="image/png,image/jpeg,image/jpg" type="file"/>
           </div>
         </form>
       </div>
@@ -132,106 +136,175 @@
   </div>
 </div>
 <!-- create new post modal End -->
+<!-- End Modal -->
+<!-- Start offcanvas -->
 
-
- <!-- End Modal -->
-
+<aside class="offcanvas offcanvas-start user-actions" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+  <div class="user-info">
+    <img src="./images/user-profile.svg" id="profileImg" onerror="this.src='./images/user-profile.svg'" alt="user avatar" class="focus-ring focus-ring-light" loading="lazy" aria-live="polite" tabindex="0">
+    <article>
+      <span  id="name">Name</span>
+      <span id="username">@username</span>
+    </article>
+    <div class="postAndComment-count">
+      <span class="post-count"></span>
+      <span class="comment-count"></span>
+    </div>  
+  </div>
+    <button type="button" class="btn-close" onclick="playSound()" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+  </div>
+    <ul>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-person "></i> Profile</li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-caret-up "></i> Premium </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-chat "></i> Chat </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-bookmark "></i> Bookmarks </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-briefcase "></i> Jobs </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-card-list "></i> Lists </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-mic "></i> Spaces </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-cash-stack"></i> monetization </li>
+    </ul>
+      <div class="status">
+      <button type="button" onclick="playSound()" class="btn btn-outline-primary joinBtn" data-bs-toggle="modal" data-bs-target="#login-modal">LogIn</button>
+      <button button type="button" onclick="playSound()" class="btn btn-outline-primary joinBtn" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+        <button onclick="logout()" onclick="playSound()" button type="button" id="logged-in" class="btn btn-outline-danger me-2">Logout</button>
+    </div>
+    <div class="dark-mode ">
+      <i class="bi bi-moon-stars focus-ring" onclick="toggleDarkMode()"  tabindex="0" aria-live="polite" onclick="toggleDarkMode()"></i>
+      <!-- when page be light change icon to sun -->
+       <!-- <i class="bi bi-moon-stars"></i> -->
+    </div>
+</aside>
+<!-- End offcanvas -->
 
  <!-- Start Navigation bar -->
 <div class="container position-sticky top-0 z-3">
-  <div class="d-flex justify-content-center">
-      <div class="col-9">
-        <nav class="navbar navbar-expand-lg  pt-3 bord-rad-4 rounded-3">
-              <div class="container-fluid ">
-                <a class="navbar-brand focus-ring" href="#"><img src="./images/world_16569394.png" loading="lazy" alt="logo"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <i class="bi bi-list-ul"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                  </ul>
-                  <div class="status d-flex w-100 justify-content-end gap-3 align-items-center">
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#login-modal">LogIn</button>
-                    <button button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
-                    <div class="after-login">
-                      <button onclick="logout()" button type="button" id="logged-in" class="btn btn-outline-danger me-2">Logout</button>
-                      <img src="./images/822.jpg" alt="user avatar" class="focus-ring" loading="lazy" aria-live="polite" tabindex="0" style="margin-right: 10px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
-                  </div>
-                  </div>
-                </div>
-              </div>
+      <div class="col-9" style="margin: 0 auto;">
+        <nav class="navbar">
+          <i class="bi bi-person focus-ring" onclick="playSound()" tabindex="0" aria-live="polite" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"></i>
+          <a class="focus-ring" href="./profile.html"><img src="./images/world_16569394.png" loading="lazy" alt="logo"></a>
+          
+          <button class="cta focus-ring" style="border-radius: 30px;">
+          <span>Upgrade</span>
+        </button>
         </nav>
     </div>
-  </div>
 </div>
-  <!-- End Navigation bar -->
+<!-- End Navigation bar -->
+  <!-- button sounds Start -->
+  <audio id="clickSound" src="./images/click.mp3"></audio>
+  <audio id="hoverSound" src="./images/hover.mp3"></audio>
+  <!-- button sounds End -->
 
 
-<!-- Start Main Content  -->
 <div class="container ">
-  <!-- POSTS -->
   <div class="post d-flex justify-content-center">
-      <div class="col-9" id="posts-container">
-        <div class="post-box d-flex p-2 ">
-        <div class="user-image">
-          <img src="./images/post1.webp" alt="User avatar" aria-live="polite" tabindex="0">
-        </div>
-        <div class="posts">
-          
-      <div class="card">
-          <div class="user-info ps-3">
-            <span class="user-name info-text">Mahmoud Rashad asassasa asasa</span>
-            <i class="bi bi-patch-check-fill"></i>
-            <span class="username info-text">@mahrashad</span>
-            <span class="post-history">. 1m</span>
-            <span class="user-sittings"><i class="bi bi-three-dots-vertical"></i></span>
-          </div>
-          <div class="card-body">
-            <span class="title">Welcome In The Tarmeez community</span>
-            <p class="card-text"> With supporting text below as a natural lead-in to additional content.</p>
-            <div class="tags">
-              <button type="button" class="btn btn-dark"><span class="hash">#</span> Tech</button>
-              <button type="button" class="btn btn-dark"><span class="hash">#</span> Tech</button>
-              <button type="button" class="btn btn-dark"><span class="hash">#</span> Tech</button>
+    <div class="col-9">
+      <div class="post-box d-flex p-2 " style="flex-wrap: wrap;"  data-aos="zoom-in-up">
+                    <div class="user-image">
+                    <img class='focus-ring profile_img' src="./images/user-profile.svg" alt="User avatar" loading="lazy"aria-live="polite" tabindex="0">
             </div>
-      </div>
-      <div class="card-header"> 
-        <img src="./images/transparent-background.png" alt="post1">
-        <div class="Reactions ">
-        <div class="chat-box">
-          <i class="bi bi-chat "></i>
-          <span class="chat-count count ">0</span>
+            <div class="posts" style="flex: 1;">
+                <div class="card">
+                    <div class="user-info ps-3">
+                        <span class="user-name info-text focus-ring" aria-live="polite" tabindex="0">name</span>
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span class="username info-text focus-ring" aria-live="polite" tabindex="0">@username</span>
+                        <span class="post-history focus-ring" aria-live="polite" tabindex="0">1s</span>
+                        <span class="user-sittings focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-three-dots-vertical"></i></span>
+                    </div>
+                <div class="card-body">
+                    <span class="title focus-ring" aria-live="polite" tabindex="0">title</span>
+                    <span class="card-text focus-ring" aria-live="polite" tabindex="0">body</span>
+                </div>
+        <div class="card-header"> 
+            <img src='./images/transparent-background.png' 
+            alt="post Image" aria-live="polite" loading="lazy" tabindex="0" class='img-body focus-ring'></img>
+            <div class="Reactions">
+            <div class="chat-box focus-ring" aria-live="polite" tabindex="0">
+            <i class="bi bi-chat"></i>
+            <span class="chat-count count">0</span>
+            </div>
+            <div class="repost-box focus-ring focus-ring-success" aria-live="polite" tabindex="0">
+            <i class="bi bi-pencil-square"></i>
+            <span class="repost-count count">0</span>
+            </div>
+            <div class="hearts-box focus-ring focus-ring-danger" aria-live="polite" tabindex="0">
+            <i class="bi bi-heart"></i>
+            <span class="hearts-count count">0</span>
+            </div>
+            <div class="share focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-box-arrow-up-right"></i></div>
         </div>
-        <div class="repost-box">
-          <i class="bi bi-pencil-square"></i>
-          <span class="repost-count count ">0</span>
         </div>
-        <div class="hearts-box">
-          <i class="bi bi-heart"></i>
-          <span class="hearts-count count">0</span>
-        </div>
-        <div class="share"><i class="bi bi-box-arrow-up-right "></i></div>
-      </div>
-      </div>
-
-
-    </div>  
-        </div>
-        </div>
-        
-      </div>
-
-  </div>
-
-
-  <!-- POSTS -->
+        </div>  
+            </div>
+              <div class="comments-container" style="width: 100%;">
+              <div class="input-container">
+                <div class="user-img"><img src="./images/822.jpg" alt="user"></div>
+                <input  type="text" class="input-comment" placeholder="Post your reply" onfocus="playSound()" aria-label="Post your reply" aria-describedby="button-addon2">
+                <button type="button" class="comment-btn">Reply</button>
+              </div>
+                <div class="comment">
+                  <div class="user-img"><img src="./images/822.jpg" alt="user"></div>
+                  <div class="comment-body" style="width: 100%;">
+                    <div class="user-info">
+                        <span class="user-name info-text focus-ring" aria-live="polite" tabindex="0">name</span>
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span class="username info-text focus-ring" aria-live="polite" tabindex="0">@username</span>
+                        <span class="post-history focus-ring" aria-live="polite" tabindex="0">1s</span>
+                        <span class="user-sittings focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-three-dots-vertical"></i></span>
+                    </div>
+                    <p class="comment-text focus-ring" aria-live="polite" tabindex="0">This is a comment</p>
+                    <div class="Reactions">
+                      <div class="chat-box focus-ring" aria-live="polite" tabindex="0">
+                      <i class="bi bi-chat"></i>
+                      <span class="chat-count count">0</span>
+                      </div>
+                      <div class="repost-box focus-ring focus-ring-success" aria-live="polite" tabindex="0">
+                      <i class="bi bi-pencil-square"></i>
+                      <span class="repost-count count">0</span>
+                      </div>
+                      <div class="hearts-box focus-ring focus-ring-danger" aria-live="polite" tabindex="0">
+                      <i class="bi bi-heart"></i>
+                      <span class="hearts-count count">0</span>
+                      </div>
+                      <div class="share focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-box-arrow-up-right"></i></div>
+                    </div>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+    </div>
+   </div>
 
 </div> 
+<!-- Start Main Content  -->
+<div class="container "><div class="post d-flex justify-content-center"><div class="col-9" id="posts-container"></div> </div></div> 
 <!-- End Main Content  -->
+<div id="go-back">new Posts <span class="arrow-up"><i class="bi bi-arrow-up-short"></i></span></div>
 
+
+<footer id="load-more">...</footer>
+
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  
+  function hoverSound() {
+    let sound = document.getElementById("hoverSound");
+    sound.play();
+  }
+  function playSound() {
+    let sound = document.getElementById("clickSound");
+    sound.play();
+  }
+  AOS.init({
+    duration: 1000,
+    once: true,
+    easing: 'ease-in-out',
+  });
+  </script>
 
 <script src="./main.js"></script>
 </body>

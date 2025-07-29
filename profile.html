@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Social Media Application for connecting with friends and sharing updates.">
+    <meta name="keywords" content="social media, friends, updates, sharing, connect">
+    <meta name="author" content="Mahmoud Rashad">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Profile | Social Media App">
+    <meta property="og:description" content="Social media application for connecting with friends and sharing updates.">
+    <meta property="og:type" content="website">
+    <!-- Import Bootstrap -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="icon" href="./images/world_16569394.png" type="image/x-icon">
+    <!-- bootstrap Icon -->
+    <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- axios Api Library -->
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./profile.css">
+    <title>Profile | Social Media App</title>
+</head>
+<body>
+    <div class="container">
+            <div class="col-9" style="margin: auto;">
+                <header class="background-profile">
+                <div class="head">
+                        <a href="./index.html" class="backHome"><i class="bi bi-arrow-left"></i></a>
+                        <div class="search-and-share">
+                            <button type="button"><i class="bi bi-search"></i></button>
+                            <button id="share-profile"><i class="bi bi-share"></i></button>
+                        </div>
+                    </div>
+                    <div class="profile-img"><img src="./images/user-profile.svg"  alt="user profile img"></div>
+                </header>
+                <div class="profile-info">
+                    <button type="button" class="setUpProfile">Set up profile</button>
+                    <article>
+                        <div class="title">
+                            <h5 id="name">Name</h5>
+                            <span class="get-verified"><i class="bi bi-patch-check-fill" style="color: var(--bg-grey-color);"></i> Get Verified</span>
+                            <p id="username">@username</p>
+                        </div>
+                        
+                    </article>
+                    <div class="date">
+                        <div class="born"><i class="bi bi-balloon"></i> <span class="born-date">Born Aug 12, 2002</span></div>
+                        <div class="joined"><i class="bi bi-calendar4-week"></i> <span class="joined-date">Joined 12 Oct 2022</span></div>
+                    </div>
+                    <div class="stats">
+                        <span class="post-count">0 Posts</span>
+                        <span class="comment-count">0 Comment</span>
+            </div>
+    </div>
+    
+
+    <script>
+        document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "light");
+    </script>
+</body>
+</html>
