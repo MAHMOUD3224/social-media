@@ -29,7 +29,7 @@
 
 
 ## in Progress
- 
+
 -----
 
 ## in future inshallah
@@ -69,10 +69,20 @@
 
 ----
 
-## profile page
+## Notes/Updates
+### create Element in js not with `innerHTML`
 
 
-# in progress
+# profile page
+
+
+## in progress
 - ### when the user clicks on the profile image, it opens a box with the user's image
-- ### open plan when the user clicks on Get Verified button
+
+- ### open plan page when the user clicks on Get Verified button
+
 - ### when the user clicks on the Set up profile button, it opens a box available to change the img and name
+
+- ### create Qr code for the user profile to share it with others
+
+---

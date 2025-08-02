@@ -2,16 +2,16 @@
     --main-color:#f0ecf0;
     --black-color:#000000;
     --secondary-color: #ffffff;
-    --blue-color: rgb(0, 0, 204);
-    --grey-color:rgb(107 114 128);
-    --bg-grey-color: rgb(56 127 245);
-    --grey-color-hover: rgba(56, 129, 245, 0.1);
+    --blue-color: #0000cc;
+    --grey-color:#6b7280;
+    --bg-grey-color: #387ff5;
+    --grey-color-hover: #3881f51a;
     
-    --red-hover-color:rgba(239, 68, 68, 0.1);
-    --red-color:rgb(239 68 68);
+    --red-hover-color:#ef44441a;
+    --red-color:#ef4444;
 
-    --green-color:rgb(34 197 94);
-    --green-color-hover:rgba(34, 197, 94, 0.1);
+    --green-color:#22c55e;
+    --green-color-hover:#22c55e1a;
 }
 *{
     margin: 0;
@@ -328,6 +328,74 @@ body.theme .user-actions .dark-mode i{
 /* End offcanvas */
 
 /* Start Make Component */
+.btn-group{
+    margin-left: auto;
+}
+.btn-group button{
+padding: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #0d6efd3d;
+    border: none;
+}
+.btn-group button:focus{
+background-color: unset;
+}
+
+.dropdown-toggle::after{
+    display: none;
+}
+.btn-group .dropdown-menu{
+    padding: 3px;
+}
+body.theme .btn-group .dropdown-menu{
+    background-color: #18181B;
+}
+
+ .btn-group .dropdown-menu .dropdown-item{
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+ .btn-group .dropdown-menu .dropdown-item.delete-option{
+    color: var(--red-color) !important;
+ }
+ .btn-group .dropdown-menu .dropdown-item.delete-option:focus,
+ .btn-group .dropdown-menu .dropdown-item.delete-option:hover{
+    background-color: var(--red-color) !important;
+    color: #ffffff !important;
+ }
+ 
+
+body.theme .btn-group .dropdown-menu .dropdown-item{
+    color: #fff;
+    
+}
+.btn-group .dropdown-menu .dropdown-item i {
+    margin-right: 10px;
+    color:inherit ;
+}
+
+
+  .btn-group .dropdown-menu .dropdown-item:hover{
+    background-color: #dedede;
+  }
+ body.theme .btn-group .dropdown-menu .dropdown-item:hover{
+    background-color: rgba(236, 237, 238, 50%);
+    color: #ffffff;
+}
+ .btn-group .dropdown-menu .dropdown-item:focus{
+    background-color: rgba(56, 129, 245, 50%);
+    color: #ffffff;
+    outline: 0;
+}
+
 /* show post img Start */
 .show-post-img{
     cursor: pointer;
@@ -677,6 +745,12 @@ body.theme .post .card{
     gap: 10px;
     align-items: center;
     margin-bottom: 10px;
+}
+@media(max-width:576px){
+    .post .user-info{
+        gap: 5px;
+    }
+    
 }
 .post .user-info .info-text{
     max-width: 90px; /* العرض الأقصى للنص */

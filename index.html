@@ -13,8 +13,7 @@
     <meta property="og:type" content="website">
 
     <title>Home | Social Media App</title>
-    <!-- Import Bootstrap -->
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <!-- App Icon -->
     <link rel="icon" href="./images/world_16569394.png" type="image/x-icon">
@@ -106,18 +105,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Create A New Post</h1>
+        <h1 class="modal-title fs-5" id="post-modal-title">Create A New Post</h1>
         <button type="button" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="color: #fff;"></i></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="mb-3">
             <label for="title-input" class="col-form-label">Title:</label>
-            <input type="text" class="form-control focus-ring focus-ring-light" id="title-input" placeholder="Write The Title">
+            <input type="text" class="form-control focus-ring focus-ring-light" id="title-input" placeholder="Write a Title">
           </div>
           <div class="mb-3">
             <label for="body-input" class="col-form-label">Body:</label>
-            <textarea id="body-input" class="focus-ring focus-ring-light" placeholder="Write The Body"></textarea>
+            <textarea id="body-input" class="focus-ring focus-ring-light" placeholder="Write a Body"></textarea>
           </div>
           <div>
             <label for="file-post" class="labelFile" tabindex="0" aria-live="polite">
@@ -197,98 +196,18 @@
   <!-- button sounds End -->
 
 
-<div class="container ">
-  <div class="post d-flex justify-content-center">
-    <div class="col-9">
-      <div class="post-box d-flex p-2 " style="flex-wrap: wrap;"  data-aos="zoom-in-up">
-                    <div class="user-image">
-                    <img class='focus-ring profile_img' src="./images/user-profile.svg" alt="User avatar" loading="lazy"aria-live="polite" tabindex="0">
-            </div>
-            <div class="posts" style="flex: 1;">
-                <div class="card">
-                    <div class="user-info ps-3">
-                        <span class="user-name info-text focus-ring" aria-live="polite" tabindex="0">name</span>
-                        <i class="bi bi-patch-check-fill"></i>
-                        <span class="username info-text focus-ring" aria-live="polite" tabindex="0">@username</span>
-                        <span class="post-history focus-ring" aria-live="polite" tabindex="0">1s</span>
-                        <span class="user-sittings focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-three-dots-vertical"></i></span>
-                    </div>
-                <div class="card-body">
-                    <span class="title focus-ring" aria-live="polite" tabindex="0">title</span>
-                    <span class="card-text focus-ring" aria-live="polite" tabindex="0">body</span>
-                </div>
-        <div class="card-header"> 
-            <img src='./images/transparent-background.png' 
-            alt="post Image" aria-live="polite" loading="lazy" tabindex="0" class='img-body focus-ring'></img>
-            <div class="Reactions">
-            <div class="chat-box focus-ring" aria-live="polite" tabindex="0">
-            <i class="bi bi-chat"></i>
-            <span class="chat-count count">0</span>
-            </div>
-            <div class="repost-box focus-ring focus-ring-success" aria-live="polite" tabindex="0">
-            <i class="bi bi-pencil-square"></i>
-            <span class="repost-count count">0</span>
-            </div>
-            <div class="hearts-box focus-ring focus-ring-danger" aria-live="polite" tabindex="0">
-            <i class="bi bi-heart"></i>
-            <span class="hearts-count count">0</span>
-            </div>
-            <div class="share focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-box-arrow-up-right"></i></div>
-        </div>
-        </div>
-        </div>  
-            </div>
-              <div class="comments-container" style="width: 100%;">
-              <div class="input-container">
-                <div class="user-img"><img src="./images/822.jpg" alt="user"></div>
-                <input  type="text" class="input-comment" placeholder="Post your reply" onfocus="playSound()" aria-label="Post your reply" aria-describedby="button-addon2">
-                <button type="button" class="comment-btn">Reply</button>
-              </div>
-                <div class="comment">
-                  <div class="user-img"><img src="./images/822.jpg" alt="user"></div>
-                  <div class="comment-body" style="width: 100%;">
-                    <div class="user-info">
-                        <span class="user-name info-text focus-ring" aria-live="polite" tabindex="0">name</span>
-                        <i class="bi bi-patch-check-fill"></i>
-                        <span class="username info-text focus-ring" aria-live="polite" tabindex="0">@username</span>
-                        <span class="post-history focus-ring" aria-live="polite" tabindex="0">1s</span>
-                        <span class="user-sittings focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-three-dots-vertical"></i></span>
-                    </div>
-                    <p class="comment-text focus-ring" aria-live="polite" tabindex="0">This is a comment</p>
-                    <div class="Reactions">
-                      <div class="chat-box focus-ring" aria-live="polite" tabindex="0">
-                      <i class="bi bi-chat"></i>
-                      <span class="chat-count count">0</span>
-                      </div>
-                      <div class="repost-box focus-ring focus-ring-success" aria-live="polite" tabindex="0">
-                      <i class="bi bi-pencil-square"></i>
-                      <span class="repost-count count">0</span>
-                      </div>
-                      <div class="hearts-box focus-ring focus-ring-danger" aria-live="polite" tabindex="0">
-                      <i class="bi bi-heart"></i>
-                      <span class="hearts-count count">0</span>
-                      </div>
-                      <div class="share focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-box-arrow-up-right"></i></div>
-                    </div>
-                  </div>
-                </div>
-              
-            </div>
-          </div>
-    </div>
-   </div>
-
-</div> 
 <!-- Start Main Content  -->
 <div class="container "><div class="post d-flex justify-content-center"><div class="col-9" id="posts-container"></div> </div></div> 
 <!-- End Main Content  -->
-<div id="go-back">new Posts <span class="arrow-up"><i class="bi bi-arrow-up-short"></i></span></div>
+<!-- <div id="go-back">new Posts <span class="arrow-up"><i class="bi bi-arrow-up-short"></i></span></div> -->
 
 
 <footer id="load-more">...</footer>
 
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Import Bootstrap -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   
   function hoverSound() {

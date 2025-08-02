@@ -1,5 +1,4 @@
 document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "light");
-
 let imagPost = document.querySelectorAll('.card-header img');
 let posts_container = document.querySelector(".post #posts-container");
 let fileInputs = document.querySelectorAll(".input-file");
@@ -7,6 +6,9 @@ let fileZones = document.querySelectorAll(".labelFile");
         let updateBtn = document.getElementById("go-back");
         let currentPage = 1;
         let isLoading = false;
+        let user = JSON.parse(localStorage.getItem("user"));
+
+        
     getPosts();
     setupUI();
     
@@ -37,7 +39,20 @@ let fileZones = document.querySelectorAll(".labelFile");
                         <i class="bi bi-patch-check-fill"></i>
                         <span class="username info-text focus-ring" aria-live="polite" tabindex="0">@${post.author.username || "none"}</span>
                         <span class="post-history focus-ring" aria-live="polite" tabindex="0">${post.created_at.replace(" ","").slice(0,3)}</span>
-                        <span class="user-sittings focus-ring" aria-live="polite" tabindex="0"><i class="bi bi-three-dots-vertical"></i></span>
+                        
+                        <div class="btn-group">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical" style='color:#0d6efd;'></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li class="dropdown-item" aria-live="polite" tabindex="0"><i class="bi bi-emoji-frown"></i>Not interested </li>
+                        <li class="dropdown-item" aria-live="polite" tabindex="0"><i class="bi bi-person-add"></i>Follow @username </li>
+                        <li class="dropdown-item" aria-live="polite" tabindex="0"><i class="bi bi-flag"></i>Report Post</li>
+                        <li class="dropdown-item edit-option" onclick="editPost('${encodeURIComponent(JSON.stringify(post))}')"  aria-live="polite" tabindex="0"><i class="bi bi-pen"></i>edit Post</li>
+                        <li class="dropdown-item delete-option"  aria-live="polite" tabindex="0"><i class="bi bi-trash"></i>Delete Post</li>
+                        </ul>
+                        </div>
+
                     </div>
                 <div class="card-body" onclick="commentsPage(${post.id})">
                     ${post.title !== null ? `<span class="title focus-ring" aria-live="polite" tabindex="0">${post.title}</span>` : ""}
@@ -90,15 +105,22 @@ let fileZones = document.querySelectorAll(".labelFile");
         });
         
     }
+    let postReplyLoading = false;
     function postReply(id) {
+        if (postReplyLoading) return;
+        postReplyLoading = true;
         let input = document.getElementById(`input-comment${id}`);
-        if(input.value.trim() === "") return;
         const token = localStorage.getItem("token");
         if(!token) {
-            showAlert("You must be logged in to post a comment", "danger");
-            return;
+        showAlert("You must be logged in to post a comment", "danger");
+        postReplyLoading = false;
+        return;
+        }else if(input.value.trim() === ""){
+        showAlert("Please write a comment before posting", "danger");
+        postReplyLoading = false;
         }
-        const params = {
+        else{
+            const params = {
             "body": input.value
         }
         axios.post(`${url}posts/${id}/comments`, params, {
@@ -113,41 +135,44 @@ let fileZones = document.querySelectorAll(".labelFile");
         })
         .catch((error) => {
             console.log(error);
-            showAlert(error.response.data.message, "danger");
+            showAlert(error.message, "danger");
+        })
+        .finally(() => {
+            postReplyLoading = false;
         });
+        
+        }
     }
     let commentsLoading = false;        
     function commentsPage(id){
+        console.log(id)
         let comments_container = document.querySelector(`#comments-${id}`);
         comments_container.classList.add("open");
-        comments_container.innerHTML = '<h3 class="no-comment">Hang tight, comments on the way!</h3>';
         if (commentsLoading) return;
             commentsLoading = true;
- // Clear previous comments
-        axios.get(`${url}posts/${id}`)  
-        .then((response) => {
             comments_container.innerHTML = "";
-            
+            axios.get(`${url}posts/${id}`)  
+            .then((response) => {
             let comments = response.data.data.comments;
+            let profileImg = user && user.profile_image && typeof user.profile_image === 'string' ? user.profile_image : "./images/user-profile.svg";
             let comment_box = `
-                <div class="input-container" >
-                <div class="user-img"><img src="./images/822.jpg" alt="user"></div>
+                <div class="input-container" data-aos="fade-down">
+                <div class="user-img"><img src="${profileImg}" onerror='this.src="./images/user-profile.svg"' alt="user avatar"></div>
                 <input  type="text" id='input-comment${id}' class="input-comment" placeholder="Post your reply" onfocus="playSound()" aria-label="Post your reply">
                 <button type="button" onclick='postReply(${id})' class="comment-btn">Reply</button>
-            </div>
-            `;
+            </div>`;
             
             if(comments.length === 0 ){
-                if(comments_container.querySelector("h3")) return;
                 comment_box += `<h3 class="no-comment"><i class="bi bi-info-circle" style="color: var(--bg-grey-color);"></i> No Comment yet! Be the first to Comment!</h3>`
                 comments_container.innerHTML += comment_box;
                 return;
             }else{
 
             for(const comment of comments){ 
-                let timeAgo = getTimeAgo(comment.author.created_at);
+                let timeAgo = getTimeAgo(comment.author.updated_at || comment.author.created_at);
+                console.log(comment)
                 comment_box += `
-                <div class="comment">
+                <div class="comment" data-aos="fade-up">
                     <div class="user-img"><img src="${typeof comment.author.profile_image === "string" && comment.author.profile_image.length > 0
                 ? comment.author.profile_image 
                 : "./images/user-profile.svg"}" onerror= 'this.src="./images/user-profile.svg" ' alt="${comment.author.username || "none"} Avatar"></div>
@@ -181,7 +206,7 @@ let fileZones = document.querySelectorAll(".labelFile");
             }
             comments_container.innerHTML += comment_box;
             }
-
+            setupUI();
         })
         .catch((error) => {
             console.log(error)
@@ -191,6 +216,20 @@ let fileZones = document.querySelectorAll(".labelFile");
             commentsLoading = false;
         });
 
+    }
+    let editIsLoading = false;
+    // encodeURIComponent(JSON.stringify())
+    function editPost(postObj){
+        let post = JSON.parse(decodeURIComponent(postObj));
+        let header = document.getElementById("post-modal-title");
+        let title = document.getElementById("title-input");
+        let body = document.getElementById("body-input");
+        header.textContent = 'Edit Post';
+        title.value = post.title || "" ;
+        body.value = post.body || "" ;
+        let post_modal = new bootstrap.Modal(document.getElementById("create-post-modal"), {});
+        post_modal.toggle()
+        console.log(post)
     }
     function showAlert(message, type = "success"){
         if(!document.getElementById("success-alert")){
@@ -214,7 +253,7 @@ let fileZones = document.querySelectorAll(".labelFile");
         setTimeout(() => {
             alertPlaceholder.remove();
         },300)
-    },3000)
+    },2000)
         }
     }
 
@@ -228,8 +267,13 @@ const loadMoreElement = document.getElementById('load-more');
 observer.observe(loadMoreElement);
 
     function setupUI(){
+        // axios.get(`https://tarmeezacademy.com/api/v1/users/${user.id}`)
+        // .then((response) => {
+        // localStorage.setItem("user",JSON.stringify( response.data.data));
+        // })
         const token = localStorage.getItem("token");
-
+        user = JSON.parse(localStorage.getItem("user"));
+        console.log(user);
         let newPost = document.querySelector('.new-post');
         let buttonsRegister =  document.querySelectorAll(".status .joinBtn");
         let logout = document.getElementById("logged-in");
@@ -239,8 +283,8 @@ observer.observe(loadMoreElement);
         let username = document.querySelector("#username");
         let comments_count = document.querySelector(".comment-count");
         let posts_count = document.querySelector(".post-count");
+
         
-        let user = JSON.parse(localStorage.getItem("user")) ;
         if(user){
             ulProfile.classList.remove("hidden");
             name.textContent = user.name ;
@@ -312,7 +356,6 @@ observer.observe(loadMoreElement);
         .then((response) => {
             localStorage.setItem("token",response.data.token);
             localStorage.setItem("user",JSON.stringify(response.data.user));
-            
             setupUI();
             
             let login_modal = document.getElementById("login-modal");
@@ -486,7 +529,7 @@ function createNewPostClicked() {
     axios.post(newPostUrl, formData, { headers: headers })
         .then((response) => {
             showAlert("Your post has been created")
-                getPosts()
+            // getPosts();
                 window.location.reload();
         })
         .catch((error) => {
@@ -496,9 +539,7 @@ function createNewPostClicked() {
         console.log(fileInput.files[0])
 }
     // create New Post Clicked Function End
-    // Show Post Details Function Start
 
-    // Show Post Details Function Start
     // Dark/Light Mode Function
     function toggleDarkMode() { 
         const body = document.body;
@@ -516,9 +557,6 @@ function createNewPostClicked() {
     });
 
 
-const timestamp = "2025-07-26T15:37:44.000000Z";
-const timeAgo = getTimeAgo(timestamp);
-console.log(timeAgo);
 
 function getTimeAgo(timestamp) {
     const commentTime = new Date(timestamp); 
@@ -547,3 +585,6 @@ function getTimeAgo(timestamp) {
         return `${days}d`; 
     }
 }
+
+
+
