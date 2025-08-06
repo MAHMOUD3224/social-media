@@ -70,7 +70,9 @@
 ----
 
 ## Notes/Updates
-### create Element in js not with `innerHTML`
+### create Elements in js not with `innerHTML`
+### revise the "module" lesson in elzero web school course
+
 
 
 # profile page
