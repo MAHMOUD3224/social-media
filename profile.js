@@ -95,7 +95,10 @@
                 posts_container.innerHTML += fragment;
             }
         })
-        .catch((error) => showAlert(error.data.message))
+        .catch((error) =>{
+            let message = error.response.data.message ;
+            showAlert(message,'danger');
+        })
         .finally(() => {
             setTimeout(() => {
                 document.querySelector(".loading-test").classList.add("active"); 

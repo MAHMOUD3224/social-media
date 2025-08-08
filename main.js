@@ -15,7 +15,11 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
         function getPosts(update = false) {
             if (isLoading) return;
                 isLoading = true;
-                if(update == true) currentPage = 1 ;
+                if(update == true){
+                    currentPage = 1;
+                    document.querySelector(".loading-test").classList.remove("active"); 
+                    document.body.classList.add("none-scroll");
+                } 
             let url = 'https://tarmeezAcademy.com/api/v1/';
             axios.get(url + `posts?limit=5&page=${currentPage}`)
                 .then(response => {
@@ -111,7 +115,10 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                 // });
                 currentPage++;
             })
-            .catch((error) => showAlert(error.data.message))
+            .catch((error) =>{
+                let message = error.response.data.message ;
+                showAlert(message,'danger');
+            })
             .finally(() => {
                 isLoading = false;
                 setTimeout(() => {

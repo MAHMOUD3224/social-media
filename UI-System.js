@@ -19,8 +19,7 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
             document.querySelector('meta[property="og:title"]').setAttribute('content', `${userData.name}'s Profile | Social Media App`);
             document.querySelector('meta[property="og:description"]').setAttribute('content', `Check out ${userData.name}'s profile and posts.`);
             document.querySelector('meta[property="og:image"]').setAttribute('content', userData.profile_image || './images/world_16569394.png');
-            //  todo: we must remove comment on this code above to share the user's profile link
-            // document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
+            document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
         }
         if(ulProfile)ulProfile.classList.remove("hidden");
         name.textContent = userData.name ;
