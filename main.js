@@ -7,7 +7,6 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
             let currentPage = 1;
             let isLoading = false;
             let user = JSON.parse(localStorage.getItem("user"));
-
             
         getPosts();
         setupUI();
@@ -115,6 +114,10 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
             .catch((error) => showAlert(error.data.message))
             .finally(() => {
                 isLoading = false;
+                setTimeout(() => {
+                    document.querySelector(".loading-test").classList.add("active"); 
+                    document.body.classList.remove("none-scroll");
+                }, 300);
             });
             
         }
@@ -382,5 +385,4 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
         }
 
     
-    loadingPage()
     

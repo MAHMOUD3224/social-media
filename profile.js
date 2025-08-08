@@ -94,8 +94,14 @@
             }else{
                 posts_container.innerHTML += fragment;
             }
-            })
-
+        })
+        .catch((error) => showAlert(error.data.message))
+        .finally(() => {
+            setTimeout(() => {
+                document.querySelector(".loading-test").classList.add("active"); 
+                document.body.classList.remove("none-scroll");
+            }, 300);
+        })
     }
 
 
@@ -105,5 +111,4 @@
         }
         }))
 
-    loadingPage();
     postActions()
