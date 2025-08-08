@@ -18,6 +18,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+html{
+    scroll-behavior: auto !important;
+}
 body{
     background-color: #000000;
     overflow-x: hidden;
@@ -107,9 +110,9 @@ body.theme .loading-test{
     .user-actions::-webkit-scrollbar{
         display: none;
     }
-::selection{
-    background-color: var(--bg-grey-color);
-    color: #000000;
+    ::selection{
+    background-color:#b1dae7;
+    color: #234567;
 }
 
 .modal-content .delete-icon{
@@ -1049,6 +1052,7 @@ body.theme .post .Reactions  > div{
  @media (max-width: 576px){
     .post .comments-container .input-container .input-comment{
         font-size: 0.9rem;
+        padding: 5px;
     }
  }
 .post .comments-container .input-container .input-comment::placeholder{
@@ -1092,7 +1096,7 @@ body.theme .post .Reactions  > div{
 
  @media (max-width: 576px){
     .post .comments-container .input-container .comment-btn{
-        padding: 10px;
+        padding: 5px 10px;
         font-size: 0.9rem;
     }
  }

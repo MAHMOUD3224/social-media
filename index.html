@@ -11,7 +11,9 @@
     <meta property="og:title" content="Home | Social Media App">
     <meta property="og:description" content="Social media application for connecting with friends and sharing updates.">
     <meta property="og:type" content="website">
-
+    <meta property="og:image" content="./images/world_16569394.png">
+    <!-- meta website url  -->
+    <!-- <meta property="og:url" content="https://yourwebsite.com"> -->
     <title>Home | Social Media App</title>
 
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -176,27 +178,27 @@
 <aside class="offcanvas offcanvas-start user-actions" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header">
   <div class="user-info">
-    <img src="./images/user-profile.svg" id="profileImg" onerror="this.src='./images/user-profile.svg'" alt="user avatar" class="focus-ring focus-ring-light" loading="lazy" aria-live="polite" tabindex="0">
-    <article>
+    <img src="./images/user-profile.svg" id="profileImg" onerror="this.src='./images/user-profile.svg'" alt="user avatar" class="go-to-profile focus-ring focus-ring-light" loading="lazy" aria-live="polite" tabindex="0">
+    <article class="go-to-profile" style="cursor: pointer;">
       <span  id="name">Name</span>
       <span id="username">@username</span>
     </article>
     <div class="postAndComment-count">
-      <span class="post-count"></span>
-      <span class="comment-count"></span>
+      <span class="post-count">0 Posts</span>
+      <span class="comment-count">0 Comments</span>
     </div>  
   </div>
-    <button type="button" class="btn-close" onclick="playSound()" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    <button type="button" class="btn-close" onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i></button>
   </div>
     <ul>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-person"></i>Profile</li>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-caret-up "></i> Premium </li>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-chat "></i> Chat </li>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-bookmark "></i> Bookmarks </li>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-briefcase "></i> Jobs </li>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-card-list "></i> Lists </li>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-mic "></i> Spaces </li>
-      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-cash-stack"></i> monetization </li>
+      <li class="focus-ring go-to-profile"  onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-person"></i>Profile</li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-chevron-double-up"></i> Premium </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-chat "></i> Chat </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-bookmark "></i> Bookmarks </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-briefcase "></i> Jobs </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-card-list "></i> Lists </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-mic "></i> Spaces </li>
+      <li class="focus-ring " onclick="playSound()" onmouseover="hoverSound()" onfocus="hoverSound()" tabindex="0" aria-live="polite"><i class="bi bi-cash-stack"></i> monetization </li>
     </ul>
       <div class="status">
       <button type="button" onclick="playSound()" class="btn btn-outline-primary joinBtn" data-bs-toggle="modal" data-bs-target="#login-modal">LogIn</button>
@@ -216,7 +218,7 @@
       <div class="col-9" style="margin: 0 auto;">
         <nav class="navbar">
           <i class="bi bi-person focus-ring" onclick="playSound()" tabindex="0" aria-live="polite" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"></i>
-          <img class="focus-ring" src="./images/world_16569394.png" loading="lazy" alt="logo">
+          <a href="#"><img class="focus-ring" src="./images/world_16569394.png" loading="lazy" alt="logo"></a>
           
           <button class="cta focus-ring" style="border-radius: 30px;">
           <span>Upgrade</span>
@@ -225,17 +227,17 @@
     </div>
 </div>
 <!-- End Navigation bar -->
-  <!-- button sounds Start -->
-  <audio id="clickSound" src="./images/click.mp3"></audio>
-  <audio id="hoverSound" src="./images/hover.mp3"></audio>
-  <!-- button sounds End -->
+
 
 
 <!-- Start Main Content  -->
 <div class="container "><div class="post d-flex justify-content-center"><div class="col-9" id="posts-container"></div> </div></div> 
 <!-- End Main Content  -->
 <!-- <div id="go-back">new Posts <span class="arrow-up"><i class="bi bi-arrow-up-short"></i></span></div> -->
-
+  <!-- button sounds Start -->
+  <audio id="clickSound" src="./images/click.mp3"></audio>
+  <audio id="hoverSound" src="./images/hover.mp3"></audio>
+  <!-- button sounds End -->
 
 <footer id="load-more"></footer>
 
@@ -245,19 +247,8 @@
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   
-  function hoverSound() {
-    let sound = document.getElementById("hoverSound");
-    sound.play();
-  }
-  function playSound() {
-    let sound = document.getElementById("clickSound");
-    sound.play();
-  }
-  AOS.init({
-    duration: 1000,
-    once: true,
-    easing: 'ease-in-out',
-  });
+
+
   </script>
   <script  src="./UI-System.js"></script>
 <script  src="./main.js"></script>

@@ -11,7 +11,17 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
     axios.get(`https://tarmeezacademy.com/api/v1/users/${user.id}`)
     .then((response) => {
         let userData = response.data.data
-        if(userProfile === false) localStorage.setItem("user",JSON.stringify( response.data.data));
+        if(userProfile === false){
+            localStorage.setItem("user",JSON.stringify( response.data.data));
+        }
+        if(userProfile){
+            document.querySelector('meta[name="description"]').setAttribute('content', `Profile page of ${userData.name}. Connect and share updates!`);
+            document.querySelector('meta[property="og:title"]').setAttribute('content', `${userData.name}'s Profile | Social Media App`);
+            document.querySelector('meta[property="og:description"]').setAttribute('content', `Check out ${userData.name}'s profile and posts.`);
+            document.querySelector('meta[property="og:image"]').setAttribute('content', userData.profile_image || './images/world_16569394.png');
+            //  todo: we must remove comment on this code above to share the user's profile link
+            // document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
+        }
         if(ulProfile)ulProfile.classList.remove("hidden");
         name.textContent = userData.name ;
         username.textContent = `@${userData.username}`;
@@ -24,7 +34,8 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
 
     })
     .catch((error) => {
-        showAlert(error.response.data.message,"danger");
+        console.log(error)
+        showAlert(error.message,"danger");
         if(ulProfile) ulProfile.classList.add("hidden") ;
         name.textContent = "Name";
         username.textContent = "@username";
@@ -33,6 +44,14 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
         profile_image.src = "./images/user-profile.svg";
         profile_image.alt = "User Avatar";
     })
+    }else{
+        if(ulProfile) ulProfile.classList.add("hidden") ;
+        name.textContent = "Name";
+        username.textContent = "@username";
+        posts_count.textContent = "0 Post";
+        comments_count.textContent = "0 Comment";
+        profile_image.src = "./images/user-profile.svg";
+        profile_image.alt = "User Avatar";
     }
 }
 
@@ -76,7 +95,6 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
 
         let postReplyLoading = false;
         function postReply(id) {
-            console.log(id)
             if (postReplyLoading) return;
             postReplyLoading = true;
             let input = document.getElementById(`input-comment${id}`);
@@ -134,7 +152,7 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
                 </div>`;
                 
                 if(comments.length === 0 ){
-                    comment_box += `<h3 class="no-comment"><i class="bi bi-info-circle" style="color: var(--bg-grey-color);"></i> No Comment yet! Be the first to Comment!</h3>`
+                    comment_box += `<h3 class="no-comment"><i class="bi bi-keyboard" style="color: var(--bg-grey-color); font-size:2rem"></i> Be the first to comment!</h3>`
                     comments_container.innerHTML += comment_box;
                     return;
                 }else{
@@ -213,7 +231,7 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
             postReply(comment_btn.dataset.commentid)
         }
         if(user_img){
-            window.location = `profile.html?userId=${user_img.dataset.userinfo}`
+            goToProfilePage(user_img)
         }
         if (box) {
             let count = box.children[1];
@@ -231,6 +249,76 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
             }
         }
         if(imgBody && !document.querySelector(".show-post-img")){
+            imgDetails(imgBody)
+        }
+
+    });
+
+    posts_container.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.target.click();
+        }
+    });
+        }
+
+
+    
+    
+    let editIsLoading = false;
+    // encodeURIComponent(JSON.stringify())
+    function editPost(postObj){
+        let post = JSON.parse(decodeURIComponent(postObj));
+        let idInput = document.getElementById("post-id-input");
+        idInput.value = post.id ;
+        let header = document.getElementById("post-modal-title");
+        let title = document.getElementById("title-input");
+        let body = document.getElementById("body-input");
+        document.getElementById('send-post').textContent = 'Edit';
+        header.textContent = 'Edit The post'
+        title.value = post.title || "" ;
+        body.value = post.body || "" ;
+        console.log(post.author.id == JSON.parse(localStorage.getItem("user")).id) ;
+        let post_modal = new bootstrap.Modal(document.getElementById("create-post-modal"), {});
+        post_modal.show()
+        
+        console.log(post)
+    }
+
+    function getPostId(del_id){
+        document.getElementById('delete-post-id').value = del_id;
+    }
+    // Delete Function Start
+    function deletePost(){
+        const token = localStorage.getItem("token");
+        let post_id = document.getElementById('delete-post-id').value
+        const headers = {
+            "authorization": `Bearer ${token}`
+        };
+        let deleteUrl = `${url}posts/${post_id}`
+        axios.delete(deleteUrl , { headers: headers })
+        .then((response) => {
+            showAlert("Your Post Has just deleted");
+            getPosts(true);
+            updateUserStatus(JSON.parse(localStorage.getItem('user')))
+        })
+        .catch(error => {
+            showAlert(error.message,"danger");
+        })
+        .finally(() => {
+            let post_modal = new bootstrap.Modal(document.getElementById("deleteModal"), {});
+            post_modal.hide()
+        })
+    }
+    // Delete Function End
+
+
+    function goToProfilePage(clickableElement) { 
+        if(clickableElement.dataset.userinfo){
+            window.location = `profile.html?userId=${clickableElement.dataset.userinfo}`
+        }
+        playSound();
+    }
+    function imgDetails(imgBody){
             let show_post_img = document.createElement("div");
             show_post_img.classList.add("show-post-img");
             let imgPost = document.createElement("img");
@@ -248,19 +336,39 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
                     document.body.classList.remove("none-scroll");
                 }
             }
+    }
+
+    
+    function imageHasSend(zone, e, eventType, fileInput) {
+            zone.classList.remove("onDrop");
+            const p = zone.querySelector("p");
+            const i = zone.querySelector("i");
+            let files;
+            
+            if (eventType === 'drop') {
+                files = e.dataTransfer.files;
+        } else if (eventType === 'change') {
+            files = e.target.files;
         }
-
-    });
-
-    posts_container.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            event.target.click();
+        
+        if (files.length > 1) {
+            showAlert("Sorry, You Must select Just one Image", "danger");
+            p.textContent = 'Just one Image please';
+            i.classList = 'bi bi-card-image';
+        } else if (files.length > 0) {
+            const file = files[0];
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+            console.log(`the image has been ${eventType === 'drop' ? 'dropped' : 'selected'}`, file.name);
+            p.textContent = 'All set! Feel free to keep going now.';
+            i.classList = 'bi bi-check2-square';
         }
-    });
-        }
+    }
 
 
-        function getTimeAgo(timestamp) {
+
+    function getTimeAgo(timestamp) {
         const commentTime = new Date(timestamp); 
         const now = new Date(); 
         const differenceInSeconds = Math.floor((now - commentTime) / 1000); 
@@ -287,3 +395,17 @@ let url = 'https://tarmeezAcademy.com/api/v1/';
             return `${days}d`; 
         }
     }
+
+    function hoverSound() {
+    let sound = document.getElementById("hoverSound");
+    sound.play();
+  }
+  function playSound() {
+    let sound = document.getElementById("clickSound");
+    sound.play();
+  }
+    AOS.init({
+    duration: 1000,
+    once: true,
+    easing: 'ease-in-out',
+  });

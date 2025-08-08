@@ -39,7 +39,7 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                         <div class="user-image">
                         <img class='focus-ring  profile_img' data-userinfo='${encodeURIComponent(JSON.stringify(post.author))}' src='${typeof post.author.profile_image === "string" && post.author.profile_image.length > 0
                     ? post.author.profile_image 
-                    : "./images/user-profile.svg"}' alt="User avatar" loading="lazy" onerror="this.src='./images/user-profile.svg'" aria-live="polite" tabindex="0">
+                    : "./images/user-profile.svg"}' alt="${post.author.username}'s Avatar" loading="lazy" onerror="this.src='./images/user-profile.svg'" aria-live="polite" tabindex="0">
                 </div>
                 <div class="posts" style="flex: 1;">
                     <div class="card">
@@ -69,7 +69,7 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                     </div>
             <div class="card-header"> 
                 ${!post.image || Object.keys(post.image).length === 0 ? '' : `<img src="${post.image}" 
-                alt="post Image" aria-live="polite" onerror="this.remove()" loading="lazy" tabindex="0" class='img-body focus-ring'></img>`}
+                alt="${post.author.username}'s post Image" aria-live="polite" onerror="this.remove()" loading="lazy" tabindex="0" class='img-body focus-ring'></img>`}
                 <div class="Reactions">
                 <div class="chat-box focus-ring" aria-live="polite" tabindex="0" data-comment='${post.id}'>
                 <i class="bi bi-chat"></i>
@@ -112,6 +112,7 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                 // });
                 currentPage++;
             })
+            .catch((error) => showAlert(error.data.message))
             .finally(() => {
                 isLoading = false;
             });
@@ -128,10 +129,6 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
 
     const loadMoreElement = document.getElementById('load-more');
     observer.observe(loadMoreElement);
-
-
-
-
         function setupUI(){
             const token = localStorage.getItem("token");
             user = JSON.parse(localStorage.getItem("user"));
@@ -142,7 +139,6 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
             let logout = document.getElementById("logged-in");
 
             updateUserStatus(user)
-
             if(token == null) // it means that User Is just a Guest 
             { 
                 logout.classList.add("hidden");
@@ -165,7 +161,7 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                 new_post.appendChild(feather);
                 document.body.appendChild(new_post);
             }
-
+            showUserProfile();
         }
 
         // Events function Start
@@ -239,7 +235,7 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                     showAlert('Your account is live! Time to explore!');
             }).catch((error) => {
                 console.log(error)
-                showAlert(error.response.data.message,"danger");
+                showAlert(error.data.message,"danger");
             })
             }else{
                 showAlert("Fill out the form","danger")
@@ -279,32 +275,7 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
         });
     });
 
-    function imageHasSend(zone, e, eventType, fileInput) {
-        zone.classList.remove("onDrop");
-        const p = zone.querySelector("p");
-        const i = zone.querySelector("i");
-        let files;
 
-        if (eventType === 'drop') {
-            files = e.dataTransfer.files;
-        } else if (eventType === 'change') {
-            files = e.target.files;
-        }
-
-        if (files.length > 1) {
-            showAlert("Sorry, You Must select Just one Image", "danger");
-            p.textContent = 'Just one Image please';
-            i.classList = 'bi bi-card-image';
-        } else if (files.length > 0) {
-            const file = files[0];
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            fileInput.files = dataTransfer.files;
-            console.log(`the image has been ${eventType === 'drop' ? 'dropped' : 'selected'}`, file.name);
-            p.textContent = 'All set! Feel free to keep going now.';
-            i.classList = 'bi bi-check2-square';
-        }
-    }
     document.getElementById("send-post").addEventListener('click', createNewPostClicked)
     let isNewPostLoading = false ;
     function createNewPostClicked() {
@@ -351,8 +322,8 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                 
             })
             .catch((error) => {
-                console.log(error.response.data.message)
-                showAlert(error.response.data.message,"danger")
+                console.log(error.data.message)
+                showAlert(error.data.message,"danger")
             })
             .finally((fin) => {
                 titleInp.value = '';
@@ -365,53 +336,12 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
 
     }
     // create New Post Clicked Function End
-    function getPostId(del_id){
-        document.getElementById('delete-post-id').value = del_id;
-    }
-    // Delete Function Start
-    function deletePost(){
-        const token = localStorage.getItem("token");
-        let post_id = document.getElementById('delete-post-id').value
-        const headers = {
-            "authorization": `Bearer ${token}`
-        };
-        let deleteUrl = `${url}posts/${post_id}`
-        axios.delete(deleteUrl , { headers: headers })
-        .then((response) => {
-            showAlert("Your Post Has just deleted");
-            getPosts(true);
-            updateUserStatus(JSON.parse(localStorage.getItem('user')))
-        })
-        .catch(error => {
-            showAlert(error.response.data.message,"danger");
-        })
-        .finally(() => {
-            let post_modal = new bootstrap.Modal(document.getElementById("deleteModal"), {});
-            post_modal.hide()
-        })
-    }
-    // Delete Function End
+    
 
-    let editIsLoading = false;
-        // encodeURIComponent(JSON.stringify())
-        function editPost(postObj){
-            let post = JSON.parse(decodeURIComponent(postObj));
-            let idInput = document.getElementById("post-id-input");
-            idInput.value = post.id ;
-            let header = document.getElementById("post-modal-title");
-            let title = document.getElementById("title-input");
-            let body = document.getElementById("body-input");
-            document.getElementById('send-post').textContent = 'Edit';
-            header.textContent = 'Edit The post'
-            title.value = post.title || "" ;
-            body.value = post.body || "" ;
-            console.log(post.author.id == JSON.parse(localStorage.getItem("user")).id) ;
-            let post_modal = new bootstrap.Modal(document.getElementById("create-post-modal"), {});
-            post_modal.show()
-            
-            console.log(post)
-    }
+
+        if(document.querySelector('.new-post')){
         document.querySelector('.new-post').addEventListener('click', addPost)
+        }
         function addPost(){
             playSound();
             let header = document.getElementById("post-modal-title");
@@ -436,5 +366,21 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
             localStorage.setItem("darkMode", isDarkMode ? "light" : "dark");
             playSound();
         }
+        showUserProfile();
+        function showUserProfile() { 
+            document.querySelectorAll('.go-to-profile').forEach(el => {
+                let userClick;
+                if(user && localStorage.getItem('token')){
+                    el.setAttribute('data-userinfo', `${encodeURIComponent(JSON.stringify(true))}`);
+                    userClick = () => goToProfilePage(el) ;
+                }else{
+                    el.removeAttribute('data-userinfo');
+                    userClick = () => showAlert("It seems that you haven't created an account with us yet. 🤔", "info") ;
+                }
+                el.addEventListener('click', userClick)
+            })
+        }
+
+    
     loadingPage()
     

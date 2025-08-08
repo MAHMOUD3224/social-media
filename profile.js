@@ -1,35 +1,37 @@
     document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "light");
-  AOS.init({
-    duration: 1000,
-    once: true,
-    easing: 'ease-in-out',
-  });
     const urlId = new URLSearchParams(window.location.search)
-    const userId = JSON.parse(decodeURIComponent(urlId.get("userId")))
+    let userId = JSON.parse(decodeURIComponent(urlId.get("userId")))
+    if(userId == true) userId = JSON.parse(localStorage.getItem('user'))
     updateUserStatus(userId,true)
     let user = JSON.parse(localStorage.getItem("user"));
-    let posts_container =  document.getElementById('posts-container')
+    let posts_container = document.getElementById('posts-container')
     console.log(userId)
-    userPosts()
-    function userPosts(){
+    getPosts()
+    function getPosts(update = false){
         let url = 'https://tarmeezAcademy.com/api/v1/';
-        let userPosts = `${url}users/${userId.id}/posts`;
-        axios.get(userPosts)
+        let getPosts = `${url}users/${userId.id}/posts`;
+        axios.get(getPosts)
         .then(response => {
                 let posts = response.data.data.reverse();
                 console.log(response.data.data)
-                
+                let editBtn   =  `` ;
+                let deleteBtn =  `` ;
                 let fragment = '' ;
                 for(const post of posts){
-                let editBtn = `<li class="dropdown-item edit-option" onclick="editPost('${encodeURIComponent(JSON.stringify(post))}')"  aria-live="polite" tabindex="0"><i class="bi bi-pen"></i>edit Post</li>`
-                let deleteBtn = `<li class="dropdown-item delete-option" onclick='getPostId(${post.id})' data-bs-toggle="modal" data-bs-target="#deleteModal" data-post="${encodeURIComponent(JSON.stringify(post))}" aria-live="polite" tabindex="0"><i class="bi bi-trash"></i>Delete Post</li>`
+                    if(JSON.parse(localStorage.getItem("user")) != null && post.author.id == JSON.parse(localStorage.getItem("user")).id){
+                        editBtn = `<li class="dropdown-item edit-option" onclick="editPost('${encodeURIComponent(JSON.stringify(post))}')"  aria-live="polite" tabindex="0"><i class="bi bi-pen"></i>edit Post</li>`
+                        deleteBtn = `<li class="dropdown-item delete-option" onclick='getPostId(${post.id})' data-bs-toggle="modal" data-bs-target="#deleteModal" data-post="${encodeURIComponent(JSON.stringify(post))}" aria-live="polite" tabindex="0"><i class="bi bi-trash"></i>Delete Post</li>`
+                    }else{
+                        editBtn = '';
+                        deleteBtn = '';
+                    }
 
                 let content = `
                 <div class="post-box d-flex p-2 " style="flex-wrap: wrap;" data-aos="zoom-in-up" id=post-${post.id}>
                     <div class="user-image">
                     <img class='focus-ring' src='${typeof post.author.profile_image === "string" && post.author.profile_image.length > 0
                 ? post.author.profile_image 
-                : "./images/user-profile.svg"}' alt="User avatar" loading="lazy" onerror="this.src='./images/user-profile.svg'" aria-live="polite" tabindex="0">
+                : "./images/user-profile.svg"}' alt="${post.author.username}'s Avatar" loading="lazy" onerror="this.src='./images/user-profile.svg'" aria-live="polite" tabindex="0">
             </div>
             <div class="posts" style="flex: 1;">
                 <div class="card">
@@ -59,7 +61,7 @@
                     </div>
             <div class="card-header"> 
                 ${!post.image || Object.keys(post.image).length === 0 ? '' : `<img src="${post.image}" 
-                alt="post Image" aria-live="polite" onerror="this.remove()" loading="lazy" tabindex="0" class='img-body focus-ring'></img>`}
+                alt="${post.author.username}'s post img" aria-live="polite" onerror="this.remove()" loading="lazy" tabindex="0" class='img-body focus-ring'></img>`}
                 <div class="Reactions">
                 <div class="chat-box focus-ring" aria-live="polite" tabindex="0" data-comment='${post.id}'>
                 <i class="bi bi-chat"></i>
@@ -87,10 +89,21 @@
                 fragment += content;
                 console.log(post);
             }
-            posts_container.innerHTML += fragment;
+            if(update == true){
+                posts_container.innerHTML = fragment;
+            }else{
+                posts_container.innerHTML += fragment;
+            }
             })
 
     }
-    
+
+
+        document.getElementById('profileImg').addEventListener('click',(() => {
+        if(!document.querySelector(".show-post-img")){
+        imgDetails(document.getElementById('profileImg'))
+        }
+        }))
+
     loadingPage();
     postActions()

@@ -87,4 +87,6 @@
 
 - ### create Qr code for the user profile to share it with others
 
+- ### make border to border-img of user img and background-color to background img
+
 ---
