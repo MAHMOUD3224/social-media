@@ -982,7 +982,7 @@ body.theme .post .Reactions  > div{
     cursor: pointer;
     object-fit: cover;
     min-height: 300px;
-    max-height: 350px;
+    max-height: 400px;
     max-width: 100%;
     min-width: 260px;
     border-radius: 1rem;
@@ -994,6 +994,7 @@ body.theme .post .Reactions  > div{
 @media (max-width: 576px){
     .post .card-header img{
         min-width: 90%;
+        min-width: 200px;
 }
 }
 

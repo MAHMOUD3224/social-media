@@ -244,8 +244,8 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                     getPosts(true)
                     showAlert('Your account is live! Time to explore!');
             }).catch((error) => {
-                console.log(error)
-                showAlert(error.data.message,"danger");
+                let message = error.response.data.message;
+                showAlert(message,"danger")
             })
             }else{
                 showAlert("Fill out the form","danger")
@@ -332,8 +332,8 @@ document.body.classList.toggle("theme", localStorage.getItem("darkMode") === "li
                 
             })
             .catch((error) => {
-                console.log(error.data.message)
-                showAlert(error.data.message,"danger")
+                let message = error.response.data.message;
+                showAlert(message,"danger")
             })
             .finally((fin) => {
                 titleInp.value = '';
